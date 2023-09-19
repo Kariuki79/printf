@@ -47,7 +47,9 @@ break:
 							int len = 0;
 
 							while (str[len])
+							{
 								len++;
+							}
 							write(1, str, len);
 							printed_chars = printed_chars + len;
 						}
