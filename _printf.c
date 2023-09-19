@@ -35,3 +35,10 @@ int_printf(const char *format,...)
 							write(1, &c, 1);
 						printed_chars++;
 					}
+break:
+				case 's':
+					{
+						char *str = va_arg(args, char *);
+						if (str)
+						{
+							int len = 0;
