@@ -42,3 +42,23 @@ break:
 						if (str)
 						{
 							int len = 0;
+							while (*str)
+							{
+								write(1, str, 1);
+
+								str++;
+								printed_chars++;
+							}
+						}
+					}
+					break;
+
+					case '%':
+					{
+						write(1, "%", 1);
+
+						printed_chars++;
+					}
+					break;
+
+					default:
