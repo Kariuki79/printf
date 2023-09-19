@@ -24,3 +24,14 @@ int_printf(const char *format,...)
 		else
 		{
 			format++;
+			of (*format == '\0')
+				break;
+
+			switch (*format)
+			{
+				case 'c':
+					{
+						char c = va_args(args,int)
+							write(1, &c, 1);
+						printed_chars++;
+					}
