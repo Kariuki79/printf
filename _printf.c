@@ -7,9 +7,11 @@
  * @format: format
  * Return: printed chars
  */
-int_printf(const char *format,...)
+
+int_printf(const char *format, ...)
 {
 	va_list args;
+
 	va_start(args, format);
 
 	int printed_chars = 0;
@@ -24,24 +26,26 @@ int_printf(const char *format,...)
 		else
 		{
 			format++;
-			of (*format == '\0')
+			of(*format == '\0')
 				break;
 
 			switch (*format)
 			{
 				case 'c':
 					{
-						char c = va_args(args,int)
+						char c = va_args(args, int)
 							write(1, &c, 1);
 						printed_chars++;
 					}
-					break:
+break:
 				case 's':
 					{
 						char *str = va_arg(args, char *);
+
 						if (str)
 						{
 							int len = 0;
+
 							while (str[len])
 								len++;
 							write(1, str, len);
@@ -65,3 +69,9 @@ int_printf(const char *format,...)
 			}
 		}
 		format++;
+	}
+
+	va_end(args);
+
+	return (printed_chars);
+}
