@@ -35,25 +35,21 @@ int_printf(const char *format,...)
 							write(1, &c, 1);
 						printed_chars++;
 					}
-break:
+					break:
 				case 's':
 					{
 						char *str = va_arg(args, char *);
 						if (str)
 						{
 							int len = 0;
-							while (*str)
-							{
-								write(1, str, 1);
-
-								str++;
-								printed_chars++;
-							}
+							while (str[len])
+								len++;
+							write(1, str, len);
+							printed_chars = printed_chars + len;
 						}
 					}
 					break;
-
-					case '%':
+				case '%':
 					{
 						write(1, "%", 1);
 
@@ -61,4 +57,11 @@ break:
 					}
 					break;
 
-					default:
+				default:
+					write(1, "%", 1);
+					write(1, format, 1);
+					printed_chars = printed_chars + 2;
+					break;
+			}
+		}
+		format++;
