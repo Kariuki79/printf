@@ -11,3 +11,16 @@ int_printf(const char *format,...)
 {
 	va_list args;
 	va_start(args, format);
+
+	int printed_chars = 0;
+
+	while (*format)
+	{
+		if (*format != '%')
+		{
+			write(1, format, 1);
+			printed_chars++;
+		}
+		else
+		{
+			format++;
