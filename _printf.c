@@ -1,77 +1,23 @@
 #include "main.h"
-
 /**
- * _printf - printf function
- * @format: format
- * Return: printed chars
+ * _printf - checks for characters in format
+ * @format: holds the characters to be printed
+ * Return: print characters
  */
 
-int_printf(const char *format, ...)
+void print_buffer(char buffer[], int *buf_index);
+int _printf(const char *format, ...)
 {
+	int a;
+	int printed = 0;
+	int chars_printed = 0;
+	int flags;
+	int width;
+	int precision;
+	int size;
+	int buffer_i = 0;
 	va_list args;
+	char buffer[BUFF_SIZE];
 
-	va_start(args, format);
-
-	int printed_chars = 0;
-
-	while (*format)
-	{
-		if (*format != '%')
-		{
-			write(1, format, 1);
-			printed_chars++;
-		}
-		else
-		{
-			format++;
-			if(*format == '\0')
-				break;
-
-			switch (*format)
-			{
-				case 'c':
-					{
-						char c = va_args(args, int)
-							write(1, &c, 1);
-						printed_chars++;
-					}
-break:
-				case 's':
-					{
-						char *str = va_arg(args, char *);
-
-						if (str)
-						{
-							int len = 0;
-
-							while (str[len])
-							{
-								len++;
-							}
-							write(1, str, len);
-							printed_chars = printed_chars + len;
-						}
-					}
-					break;
-				case '%':
-					{
-						write(1, "%", 1);
-
-						printed_chars++;
-					}
-					break;
-
-				default:
-					write(1, "%", 1);
-					write(1, format, 1);
-					printed_chars = printed_chars + 2;
-					break;
-			}
-		}
-		format++;
-	}
-
-	va_end(args);
-
-	return (printed_chars);
-}
+	if (format == NULL)
+		return (-1);
