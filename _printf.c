@@ -24,7 +24,7 @@ int_printf(const char *format, ...)
 		else
 		{
 			format++;
-			of(*format == '\0')
+			if(*format == '\0')
 				break;
 
 			switch (*format)
