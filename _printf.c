@@ -54,3 +54,9 @@ int _printf(const char *format, ...)
  * @buffer: contains array of characters
  * @buffer_i: lenght of characters in the array
 */
+void print_buffer(char buffer[], int *buffer_i)
+{
+	if (*buffer_i > 0)
+		write(1, &buffer[0], *buffer_i);
+	*buffer_i = 0;
+}
