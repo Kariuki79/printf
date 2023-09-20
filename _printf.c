@@ -35,7 +35,7 @@ int _printf(const *format, ...)
 				{
 					if (format[i + 1] == ' ' && !format[i + 2])
 						return (-1);
-					handle_buf(buffer, format[i], ibuf), len++, i--;
+					handle_buffer(buffer, format[i], ibuf), len++, i--;
 				}
 				else
 				{
@@ -47,7 +47,7 @@ int _printf(const *format, ...)
 		}
 		else
 		{
-			handle_buf(buffer, format[i], ibuf), len++;
+			handle_buffer(buffer, format[i], ibuf), len++;
 		}
 		for (ibuf = len; ibuf > 1024; ibuf -=1024)
 			;
