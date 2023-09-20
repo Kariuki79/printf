@@ -4,7 +4,7 @@
  * @format: pointer to a string
  * Return: chars printed
  */
-int _printf(const *format, ...)
+int _printf(const char *format, ...)
 {
 	unsigned int i = 0, len = 0, ibuf = 0;
 	va_list args;
@@ -39,7 +39,7 @@ int _printf(const *format, ...)
 				}
 				else
 				{
-					len += function(arguments, buffer, ibuf);
+					len += function(args, buffer, ibuf);
 					i += ev_print_func(format, i + 1);
 				}
 			}
