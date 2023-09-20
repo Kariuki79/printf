@@ -21,3 +21,13 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		return (-1);
+	va_start(args, format);
+	for (a = 0; format && format[a] != '\0'; i++)
+	{
+		if (format[a] != '%')
+		{
+			buffer[buffer_i++] = format[a];
+			if (buffer_i == BUFF_SIZE)
+				print_buffer(buffer, &buffer_i);
+			chars_printed++;
+		}
