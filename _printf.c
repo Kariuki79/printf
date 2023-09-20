@@ -1,62 +1,32 @@
 #include "main.h"
 /**
- * _printf - checks for characters in format
- * @format: holds the characters to be printed
- * Return: print characters
+ * _printf - prints data
+ * @format: pointer to a string
+ * Return: chars printed
  */
-
-void print_buffer(char buffer[], int *buf_index);
-int _printf(const char *format, ...)
+int _printf(const *format, ...)
 {
-	int a;
-	int printed = 0;
-	int chars_printed = 0;
-	int flags;
-	int width;
-	int precision;
-	int size;
-	int buffer_i = 0;
+	unsigned int i = 0, len = 0, ibuf = 0;
 	va_list args;
-	char buffer[BUFF_SIZE];
-
-	if (format == NULL)
+	int (*function)(va_list, char *, unsigned int);
+	char *buffer;
+	va_start(args, format), buffer = malloc(sizeof(char) *1024);
+	if (!format || !buffer || (format[i] == '%' && !format{i +1]))
 		return (-1);
-	va_start(args, format);
-	for (a = 0; format && format[a] != '\0'; i++)
+	if (!format[i])
 	{
-		if (format[a] != '%')
-		{
-			buffer[buffer_i++] = format[a];
-			if (buffer_i == BUFF_SIZE)
-				print_buffer(buffer, &buffer_i);
-			chars_printed++;
-		}
-		else
-		{
-			printf_buffer(buffer, &buffer_i);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, args);
-			precision = get_precision(format, &i, args);
-			size = get_size(format, &i);
-			++i;
-			printed = handle_print(format, &i, args, buffer, flags, width, precision, size);
-			if (printed == -1)
-				return (-1);
-			chars_printed = chars_printed + printed;
-		}
+		return (0);
 	}
-	print_buffer(buffer, &buffer_i);
-	va_end(args);
-	return (chars_printed);
-}
-/**
- * print_buffer - receives characters in a buffer and prints the contents
- * @buffer: contains array of characters
- * @buffer_i: lenght of characters in the array
-*/
-void print_buffer(char buffer[], int *buffer_i)
-{
-	if (*buffer_i > 0)
-		write(1, &buffer[0], *buffer_i);
-	*buffer_i = 0;
-}
+	for (i = 0; format && format[i]; i++)
+	{
+		if (format[i] == '&')
+		{
+			if (format[i + 1] == '\0')
+			{
+				print_buf(buffer, ibuf);
+				free(buffer);
+				va_end(arguemts);
+				return (-1);
+			}
+
+        
