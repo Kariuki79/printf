@@ -40,3 +40,17 @@ int _printf(const char *format, ...)
 			size = get_size(format, &i);
 			++i;
 			printed = handle_print(format, &i, args, buffer, flags, width, precision, size);
+			if (printed == -1)
+				return (-1);
+			chars_printed = chars_printed + printed;
+		}
+	}
+	print_buffer(buffer, &buffer_i);
+	va_end(args);
+	return (chars_printed);
+}
+/**
+ * print_buffer - receives characters in a buffer and prints the contents
+ * @buffer: contains array of characters
+ * @buffer_i: lenght of characters in the array
+*/
