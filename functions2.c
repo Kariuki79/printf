@@ -162,7 +162,7 @@ int print_rot13string(va_list types, char buffer[],
 		{
 			if (alpha[b] == str[a])
 			{
-				a = replace[b];
+				x = replace[b];
 				write(1, &x, 1);
 				count++;
 				break;
