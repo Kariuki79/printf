@@ -12,7 +12,7 @@
 int handle_write_char(char c, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	int i = 0;
+	int a = 0;
 	char padding = ' ';
 
 	UNUSED(precision);
@@ -21,20 +21,20 @@ int handle_write_char(char c, char buffer[],
 	if (flags & F_ZERO)
 		padding = '0';
 
-	buffer[i++] = c;
-	buffer[i] = '\0';
+	buffer[a++] = c;
+	buffer[a] = '\0';
 
 	if (width > 1)
 	{
 		buffer[BUFF_SIZE - 1] = '\0';
-		for (i = 0; i < width - 1; i++)
-			buffer[BUFF_SIZE - i - 2] = padding;
+		for (a = 0; a < width - 1; a++)
+			buffer[BUFF_SIZE - a - 2] = padding;
 
 		if (flags & F_MINUS)
 			return (write(1, &buffer[0], 1) +
-					write(1, &buffer[BUFF_SIZE - i - 1], width - 1));
+					write(1, &buffer[BUFF_SIZE - a - 1], width - 1));
 		else
-			return (write(1, &buffer[BUFF_SIZE - i - 1], width - 1) +
+			return (write(1, &buffer[BUFF_SIZE - a - 1], width - 1) +
 					write(1, &buffer[0], 1));
 	}
 
@@ -92,7 +92,7 @@ int write_num(int ind, char buffer[],
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0' && width == 0)
 		return (0);
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
-		buffer[ind] = padding = ' '; /* width is displayed with paddinging ' ' */
+		buffer[ind] = padding = ' '; 
 	if (prec > 0 && prec < length)
 		padding = ' ';
 	while (prec > length)
