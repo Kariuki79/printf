@@ -11,8 +11,8 @@
  * @size: Size specifier
  * Return: (1) or (2)
  */
-int handle_print(const char *formatted_string, int *index, va_list list, char buffer[],
-	int flags, int width, int precision, int size)
+int handle_print(const char *formatted_string, int *index, va_list list, 
+char buffer[], int flags, int width, int precision, int size)
 {
 	int i, len = 0, chars_printed = -1;
 	formatted_string_t formatted_string_types[] = {
@@ -24,7 +24,8 @@ int handle_print(const char *formatted_string, int *index, va_list list, char bu
 	};
 	for (i = 0; formatted_string_types[i].formatted_string != '\0'; i++)
 		if (formatted_string[*index] == formatted_string_types[i].formatted_string)
-			return (formatted_string_types[i].fn(list, buffer, flags, width, precision, size));
+			return (formatted_string_types[i].fn(list, buffer, flags, 
+				width, precision, size));
 
 	if (formatted_string_types[i].formatted_string == '\0')
 	{
