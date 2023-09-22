@@ -7,46 +7,56 @@ void print_buffer(char buffer[], int *buffer_index);
  */
 int _printf(const char *format, ...)
 {
-	int i, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buffer_index = 0;
-	va_list list;
-	char buffer[BUFF_SIZE];
+    int printed_chars = 0;
+    int buffer_index = 0, int i;
+    va_list list;
+    char buffer[BUFF_SIZE];
 
-	if (format == NULL)
-		return (-1);
+    if (format == NULL)
+        return (-1);
 
-	va_start(list, format);
+    va_start(list, format);
 
-	for (i = 0; format && format[i] != '\0'; i++)
-	{
-		if (format[i] != '%')
-		{
-			buffer[buffer_index++] = format[i];
-			if (buffer_index == BUFF_SIZE)
-				print_buffer(buffer, &buffer_index);
-			printed_chars++;
-		}
-		else
-		{
-			print_buffer(buffer, &buffer_index);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
-			++i;
-			printed = handle_print(format, &i, list, buffer,
-				flags, width, precision, size);
-			if (printed == -1)
-				return (-1);
-			printed_chars += printed;
-		}
-	}
+    for (i = 0; format[i] != '\0'; i++)
+    {
+        if (format[i] != '%')
+        {
+            buffer[buffer_index++] = format[i];
+            if (buffer_index == BUFF_SIZE || format[i + 1] == '\0')
+            {
+                printed_chars += print_buffer(buffer, &buffer_index);
+            }
+            else
+            {
+                printed_chars++;
+            }
+        }
+        else
+        {
+            print_buffer(buffer, &buffer_index);
+            i++;
+            if (format[i] == '\0')
+                return (-1);
 
-	print_buffer(buffer, &buffer_index);
+            int flags = get_flags(format, &i);
+            int width = get_width(format, &i, list);
+            int precision = get_precision(format, &i, list);
+            int size = get_size(format, &i);
 
-	va_end(list);
+            int printed = handle_print(format[i], list, buffer, flags, width, precision, size);
+            if (printed == -1)
+            {
+                va_end(list);
+                return (-1);
+            }
 
-	return (printed_chars);
+            printed_chars += printed;
+        }
+    }
+
+    va_end(list);
+
+    return printed_chars;
 }
 
 /**
