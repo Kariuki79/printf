@@ -150,11 +150,11 @@ int print_binary(va_list types, char buffer[],
 	unsigned int a[32];
 	int count;
 
-	void(buffer);
-	void(flags);
-	void(width);
-	void(precision);
-	void(size);
+	UNUSED(buffer);
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(precision);
+	UNUSED(size);
 
 	v = va_arg(types, unsigned int);
 	w = 2147483648;
