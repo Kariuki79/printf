@@ -17,16 +17,16 @@
 #define S_LONG 2
 #define S_SHORT 1
 
-struct formatted_string
+struct fmt
 {
-	char formatted_string;
+	char fmt;
 	int (*fn)(va_list, char[], int, int, int, int);
 };
 
-typedef struct formatted_string formatted_string_t;
+typedef struct fmt fmt_t;
 
 int _printf(const char *format, ...);
-int handle_print(const char *formatted_string, int *i,
+int handle_print(const char *fmt, int *i,
 va_list list, char buffer[], int flags, int width, int precision, int size);
 
 int print_char(va_list types, char buffer[],
