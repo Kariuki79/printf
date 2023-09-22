@@ -8,9 +8,6 @@ void print_buffer(char buffer[], int *buff_ind);
 
 int _printf(const char *format, ...)
 {
-    if (format == NULL)
-        return (-1);
-
     va_list list;
     va_start(list, format);
 
@@ -18,6 +15,9 @@ int _printf(const char *format, ...)
     int buff_ind = 0;
     char buffer[BUFF_SIZE];
 	int i;
+	
+	if (format == NULL)
+		return (-1);
 
     for (int i = 0; format[i] != '\0'; i++)
     {
@@ -44,7 +44,7 @@ int _printf(const char *format, ...)
                 return (-1);
             }
 
-            if (format[i] == '%') // Handle '%%' as a literal '%'
+            if (format[i] == '%') 
             {
                 buffer[buff_ind++] = '%';
                 if (buff_ind == BUFF_SIZE || format[i + 1] == '\0')
