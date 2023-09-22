@@ -8,9 +8,10 @@ void print_buffer(char buffer[], int *buffer_index);
 int _printf(const char *format, ...)
 {
     int printed_chars = 0;
-    int buffer_index = 0, int i;
+    int buffer_index = 0;int i;
     va_list list;
     char buffer[BUFF_SIZE];
+    char specifier_buffer[BUFF_SIZE];
 
     if (format == NULL)
         return (-1);
@@ -36,21 +37,24 @@ int _printf(const char *format, ...)
             print_buffer(buffer, &buffer_index);
             i++;
             if (format[i] == '\0')
+            {
+                va_end(list);
                 return (-1);
+            }
 
             int flags = get_flags(format, &i);
             int width = get_width(format, &i, list);
             int precision = get_precision(format, &i, list);
             int size = get_size(format, &i);
 
-            int printed = handle_print(format[i], list, buffer, flags, width, precision, size);
-            if (printed == -1)
+            int specifier_length = handle_print(format[i], list, specifier_buffer, flags, width, precision, size);
+            if (specifier_length == -1)
             {
                 va_end(list);
                 return (-1);
             }
 
-            printed_chars += printed;
+            printed_chars += print_buffer(specifier_buffer, &specifier_length);
         }
     }
 
