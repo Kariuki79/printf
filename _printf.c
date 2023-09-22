@@ -8,23 +8,23 @@ void print_buffer(char buffer[], int *buff_ind);
 
 int _printf(const char *format, ...)
 {
+    if (format == NULL)
+        return (-1);
+
     va_list list;
     va_start(list, format);
 
     int printed_chars = 0;
-    int i;
-    char buffer[BUFF_SIZE];
     int buff_ind = 0;
-    
-    if (format == NULL)
-        return (-1);
+    char buffer[BUFF_SIZE];
+	int i;
 
-    for (i = 0; format[i]; i++)
+    for (int i = 0; format[i] != '\0'; i++)
     {
         if (format[i] != '%')
         {
             buffer[buff_ind++] = format[i];
-            if (buff_ind == BUFF_SIZE || !format[i + 1])
+            if (buff_ind == BUFF_SIZE || format[i + 1] == '\0')
             {
                 printed_chars += write(1, buffer, buff_ind);
                 buff_ind = 0;
@@ -36,21 +36,43 @@ int _printf(const char *format, ...)
         }
         else
         {
-            if (format[i + 1] == '\0')
+            print_buffer(buffer, &buff_ind);
+            i++;
+            if (format[i] == '\0')
             {
                 va_end(list);
                 return (-1);
             }
 
-            int specifier_length = handle_print(format[i + 1], list, buffer, &buff_ind);
-            if (specifier_length == -1)
+            if (format[i] == '%') // Handle '%%' as a literal '%'
             {
-                va_end(list);
-                return (-1);
+                buffer[buff_ind++] = '%';
+                if (buff_ind == BUFF_SIZE || format[i + 1] == '\0')
+                {
+                    printed_chars += write(1, buffer, buff_ind);
+                    buff_ind = 0;
+                }
+                else
+                {
+                    printed_chars++;
+                }
             }
+            else
+            {
+                int flags = get_flags(format, &i);
+                int width = get_width(format, &i, list);
+                int precision = get_precision(format, &i, list);
+                int size = get_size(format, &i);
 
-            i++; // Skip the format specifier
-            printed_chars += specifier_length;
+                int printed = handle_print(format[i], list, buffer, flags, width, precision, size);
+                if (printed == -1)
+                {
+                    va_end(list);
+                    return (-1);
+                }
+
+                printed_chars += printed;
+            }
         }
     }
 
