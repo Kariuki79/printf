@@ -3,11 +3,11 @@ void print_buffer(char buffer[], int *buffer_index);
 /**
  * _printf - Printf function todifferent arguments
  * @format: format
- * Return: Printed chars
+ * Return: Print chars
  */
 int _printf(const char *format, ...)
 {
-	int a, printed = 0, printed_chars = 0;
+	int a, print = 0, chars_printed = 0;
 	int flags, width, precision, size, buffer_index = 0;
 	va_list list;
 	char buffer[BUFF_SIZE];
@@ -24,7 +24,7 @@ int _printf(const char *format, ...)
 			buffer[buffer_index++] = format[a];
 			if (buffer_index == BUFF_SIZE)
 				print_buffer(buffer, &buffer_index);
-			printed_chars++;
+			chars_printed++;
 		}
 		else
 		{
@@ -34,11 +34,11 @@ int _printf(const char *format, ...)
 			precision = get_precision(format, &a, list);
 			size = get_size(format, &a);
 			++a;
-			printed = handle_print(format, &a, list, buffer,
+			print = handle_print(format, &a, list, buffer,
 				flags, width, precision, size);
-			if (printed == -1)
+			if (print == -1)
 				return (-1);
-			printed_chars += printed;
+			chars_printed += print;
 		}
 	}
 
@@ -46,7 +46,7 @@ int _printf(const char *format, ...)
 
 	va_end(list);
 
-	return (printed_chars);
+	return (chars_printed);
 }
 
 /**
